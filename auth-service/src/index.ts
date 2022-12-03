@@ -7,10 +7,15 @@ import express, { Response, Request } from "express";
 import { MongooseConnection } from "./db/mongoose";
 import { User } from "./models/user";
 import "express-async-errors";
+import { api } from "./routes/Product-route";
+import { apiMascota } from "./routes/Mascota-route";
 
 const app = express();
 const port = 8881;
+
 app.use(express.json());
+app.use(api);
+app.use(apiMascota);
 
 app.post("/api/signup", async (reg: Request, res: Response) => {
   console.log(reg.body);
@@ -32,14 +37,6 @@ app.post("/api/signin", async (reg: Request, res: Response) => {
   } catch (error: any) {
     throw new BadRequestError(error.message);
   }
-});
-
-// app.get("/api/textoPlano", (reg: Request, res: Response) => {
-//   res.send("Hola mundo");
-// });
-
-app.get("/api/json", (reg: Request, res: Response) => {
-  res.send({ message: "Hola mundo" });
 });
 
 app.post("/api/signup/:document", (req: Request, res: Response) => {
